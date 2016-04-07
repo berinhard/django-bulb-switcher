@@ -21,6 +21,7 @@ def configure_settings():
                 }
             },
             INSTALLED_APPS = (
+                'django.contrib.auth',
                 'django.contrib.contenttypes',
                 'test.test_app'
             ),
