@@ -26,6 +26,7 @@ def configure_settings():
             ),
             SITE_ID=1,
             TEST_RUNNER='django.test.simple.DjangoTestSuiteRunner',
+            ROOT_URLCONF = 'test.urls',
         )
 
         if django.VERSION >= (1, 7):
