@@ -79,3 +79,15 @@ class ContionalBulbSwitcherMiddlewareTests(TestCase):
                 self.middleware.process_request,
                 self.request
             )
+
+    def test_allows_string_to_import_conditional(self):
+        BULB_SWITCHER_CONDITIONALS = {
+            'flag1': ['test.test_app.conditionals.valid_conditional'],
+            'flag2': [u'test.test_app.conditionals.invalid_conditional'],
+        }
+        with override_settings(BULB_SWITCHER_CONDITIONALS=BULB_SWITCHER_CONDITIONALS):
+            self.middleware.process_request(self.request)
+
+        valid_bulb_switcher_conditionals= self.request.VALID_BULB_SWITCHER_CONDITIONALS
+        self.assertEqual(1, len(valid_bulb_switcher_conditionals))
+        self.assertIn('flag1', valid_bulb_switcher_conditionals)

@@ -1,4 +1,6 @@
 # coding:utf-8
+import importlib
+
 from django.conf import settings
 
 from .exceptions import ImproperlyConfiguredBulbSwitcherConditions
@@ -19,8 +21,14 @@ class ContionalBulbSwitcherMiddleware(object):
             raise ImproperlyConfiguredBulbSwitcherConditions(self.error_messages['not_configured'])
 
         try:
-            for flag, condtionals in conditionals_config.items():
-                if all([c(request.user) for c in condtionals]):
+            for flag, conditionals in conditionals_config.items():
+                for cond in conditionals:
+                    if isinstance(cond, str) or isinstance(cond, unicode):
+                        path, cond_name = cond.rsplit('.', 1)
+                        cond = getattr(importlib.import_module(path), cond_name)
+                    if not cond(request.user):
+                        break
+                else:
                     request.VALID_BULB_SWITCHER_CONDITIONALS.append(flag)
 
         except (TypeError, AttributeError):
