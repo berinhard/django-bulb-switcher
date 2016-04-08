@@ -74,9 +74,9 @@ Now you can check and decide how you'll process your view just like the followin
 
     def your_view_request(request):
         admin_flag, partial_flag = 'access_to_master_admin_page', 'partial_access_to_admin_page'
-        if bulb_checker.is_off(admin_flag) and bulb_checker.is_off(partial_flag):
+        if bulb_checker.is_off(request, admin_flag) and bulb_checker.is_off(request, partial_flag):
             # None of the flags are actives flow
-        elif bulb_checker.is_on(admin_flag):
+        elif bulb_checker.is_on(request, admin_flag):
             # admin flow
-        elif bulb_checker.is_on(partial_flag):
+        elif bulb_checker.is_on(request, partial_flag):
             # commom staff flow
