@@ -26,7 +26,8 @@ class ContionalBulbSwitcherMiddleware(object):
                     if isinstance(cond, str) or isinstance(cond, unicode):
                         path, cond_name = cond.rsplit('.', 1)
                         cond = getattr(importlib.import_module(path), cond_name)
-                    if not cond(request.user):
+
+                    if not cond(request, request.user):
                         break
                 else:
                     request.VALID_BULB_SWITCHER_CONDITIONALS.append(flag)

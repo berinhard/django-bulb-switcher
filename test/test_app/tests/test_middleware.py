@@ -18,7 +18,7 @@ class ContionalBulbSwitcherMiddlewareTests(TestCase):
         self.request = factory.get('/')
         self.request.user = self.user
 
-    def test_calls_conditions_given_user(self):
+    def test_calls_conditions_given_user_and_request(self):
         mocks = [Mock() for i in range(4)]
 
         BULB_SWITCHER_CONDITIONALS = {
@@ -29,12 +29,12 @@ class ContionalBulbSwitcherMiddlewareTests(TestCase):
             self.middleware.process_request(self.request)
 
         for mock in mocks:
-            mock.assert_called_once_with(self.user)
+            mock.assert_called_once_with(self.request, self.user)
 
     def test_populates_flag_result_on_request(self):
         BULB_SWITCHER_CONDITIONALS = {
-            'flag1': [lambda user: True],
-            'flag2': [lambda user: True, lambda user: False],
+            'flag1': [lambda request, user: True],
+            'flag2': [lambda request, user: True, lambda  request, user: False],
         }
         with override_settings(BULB_SWITCHER_CONDITIONALS=BULB_SWITCHER_CONDITIONALS):
             self.middleware.process_request(self.request)

@@ -1,5 +1,5 @@
-========================================================
 Django Bulb Switcher: DB Independent Feature Toggle Tool
+========================================================
 ========================================================
 
 *Django Bulb Switcher* offers you a way to configure conditions and associate these conditions to permission flags.
@@ -15,7 +15,7 @@ Install
 Usage and Info
 ==============
 
-Django Bulb Switcher id divided just on configuration and checking which flags were turned on/off by request.
+Django Bulb Switcher is divided just on configuration and checking which flags were turned on/off by request.
 
 Step 1: Setting up the middleware
 ---------------------------------
@@ -32,14 +32,14 @@ Adds to your middleware classes:
 Step 2: Config the conditionals dict
 ------------------------------------
 
-The conditionals dict is composed of a list of callable objects. Each one of them must return True or False and the flag will be active on the request if *all* of them return True for the user. Here is an exemple of a conditional:
+The conditionals dict is composed of a list of callable objects. Each one of them must return True or False and the flag will be active on the request if *all* of them return True for the pair of parameters request and user. Here is an exemple of a conditional:
 
 .. code-block:: python
 
-    def staff_condition(user):
+    def staff_condition(request, user):
         return user.is_staff
 
-    def superuser_condition(user):
+    def superuser_condition(request, user):
         return user.is_superuser
 
 And at your settings.py:
