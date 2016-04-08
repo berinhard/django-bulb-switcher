@@ -23,6 +23,7 @@ Step 1: Setting up the middleware
 Adds to your middleware classes:
 
 .. code-block:: python
+
     MIDDLEWARE_CLASSES = [
         ....
         'django_bulb_switcher.middlewares.ContionalBulbSwitcherMiddleware',
@@ -44,6 +45,7 @@ The conditionals dict is composed of a list of callable objects. Each one of the
 And at your settings.py:
 
 .. code-block:: python
+
     from your_app.conditionals import staff_condition, superuser_condition
 
     BULB_SWITCHER_CONDITIONALS = {
@@ -54,6 +56,7 @@ And at your settings.py:
 You could also define your conditionals without importing them as follows:
 
 .. code-block:: python
+
     BULB_SWITCHER_CONDITIONALS = {
         'access_to_master_admin_page': ['your_app.conditionals.staff_condition', 'your_app.conditionals.superuser_condition'],
         'partial_access_to_admin_page': ['your_app.conditionals.staff_condition'],
@@ -66,6 +69,7 @@ Step 3: Checking the flag status
 Now you can check and decide how you'll process your view just like the following example:
 
 .. code-block:: python
+
     from django_bulb_switcher import bulb_checker
 
     def your_view_request(request):
